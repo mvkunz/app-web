@@ -1,0 +1,42 @@
+{
+  "development": {
+    "username": "default",
+    "password": "SszYxr0N6ZcW",
+    "database": "verceldb",
+    "host": "ep-dry-forest-a46o2c93-pooler.us-east-1.aws.neon.tech",
+    "dialect": "postgres",
+    "dialectOptions": {
+      "ssl": {
+        "require": true,
+        "rejectUnauthorized": false
+      }
+    }
+  },
+  "test": {
+    "username": "default",
+    "password": "SszYxr0N6ZcW",
+    "database": "verceldb",
+    "host": "ep-dry-forest-a46o2c93-pooler.us-east-1.aws.neon.tech",
+    "dialect": "postgres",
+    "dialectOptions": {
+      "ssl": {
+        "require": true,
+        "rejectUnauthorized": false
+      }
+    }
+  },
+  "production": {
+    "username": "default",
+    "password": "SszYxr0N6ZcW",
+    "database": "verceldb",
+    "host": "ep-dry-forest-a46o2c93-pooler.us-east-1.aws.neon.tech",
+    "dialect": "postgres",
+    
+    "dialectOptions": {
+      "ssl": {
+        "require": true,
+        "rejectUnauthorized": false
+      }
+    }
+  }
+}
