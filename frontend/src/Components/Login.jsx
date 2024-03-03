@@ -30,19 +30,30 @@ function Login() {
 
   return (
     <form onSubmit={ handleSubmit }>
-      <h3>Login:</h3>
-      <label htmlFor="email">
-        E-mail
-        {' '}
-        <input
-          type="email"
-          id="email"
-          value={ email }
-          onChange={ handleEmailChange }
-        />
-      </label>
-      {' '}
-      <label htmlFor='password'>
+      <h3 className="text-3xl font-bold dark:text-white">Login</h3>
+      <div className="flex justify-center items-center h-40 mb-2">
+        <label
+          htmlFor="email"
+          className="block mb-2 text-xl font-medium text-gray-900 dark:text-white"
+        >
+          E-mail
+          <input
+            type="email"
+            name="email"
+            id="email"
+            className="bg-teal-500 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-60 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            placeholder="name@company.com"
+            required=""
+            value={ email }
+            onChange={ handleEmailChange }
+          />
+        </label>
+      </div>
+      <div className="flex justify-center items-center h-3 pt-0">
+      <label
+        htmlFor='password'
+        className="block mb-2 text-xl font-medium text-gray-900 dark:text-white"
+      >
         Password
         {' '}
         <input
@@ -50,11 +61,16 @@ function Login() {
           id="password"
           value={ password }
           onChange={ handlePasswordChange }
+          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-60 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          placeholder="•••••••••"
+          required=""
         />
       </label>
+      </div>
       <button
+        className="text-white bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 w-52 h-288 my-10"
         type="submit"
-        disabled={ !(isValidEmail && isValidPassword) }
+        disabled={!(isValidEmail && isValidPassword)}
       >
         ENTER
       </button>
