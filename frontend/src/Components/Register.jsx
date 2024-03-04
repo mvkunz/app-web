@@ -1,9 +1,12 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const RegisterForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+
+  const navigate = useNavigate();
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -16,7 +19,7 @@ const RegisterForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('url_do_seu_backend/registro', {
+      const response = await fetch('http://localhost:3000/api/auth/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -30,11 +33,13 @@ const RegisterForm = () => {
       if (!response.ok) {
         throw new Error('Erro ao registrar. Por favor, tente novamente.');
       }
-  
-      // Se a resposta estiver ok, você pode prosseguir com a lógica de sucesso
-      console.log('Registro bem-sucedido');
+
+      if (response.ok) {
+        alert('Registrado com sucesso!')
+        navigate('/auth/login')
+      }
     } catch (err) {
-      // Lógica de tratamento de erro
+      // tratamento de erro
       setError(err.message);
       console.error('Erro ao registrar:', err);
     }
