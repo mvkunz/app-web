@@ -7,7 +7,11 @@ const Table = () => {
     // Função para carregar os produtos da API
     const fetchProducts = async () => {
       try {
-        const response = await fetch('http://localhost:3000/api/products');
+        const response = await fetch('http://localhost:3000/api/products', {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`
+          }
+        });
         if (!response.ok) {
           throw new Error('Falha ao carregar produtos');
         }
@@ -21,15 +25,23 @@ const Table = () => {
     fetchProducts();
   }, []);
 
+  const handleEdit = (id) => {
+    console.log('Editando produto:', id);
+  }
+
   const handleDetele = async (id) => {
     try {
-      const response = await fetch(`url_da_sua_api/produtos/${id}`, {
+      const response = await fetch(`http://localhost:3000/api/products/${id}`, {
         method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`
+        }
     });
     if (!response.ok) {
       throw new Error('Falha ao deletar produto');
     }
     setProducts(products.filter((product) => product.id !== id));
+    alert('Produto deletado com sucesso!')
   } catch (error) {
     console.error('Erro ao deletar produto:', error);
   }
@@ -82,7 +94,13 @@ const Table = () => {
                       {product.color}
                     </td>
                     <td className="px-6 py-4">
-                      <button type="button" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">UPDATE</button>
+                      <button
+                        type="button"
+                        onClick={() => handleEdit(product.id)}
+                        className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+                      >
+                        UPDATE
+                      </button>
                       {' '}
                       <button
                         type="button"
@@ -94,32 +112,6 @@ const Table = () => {
                     </td>
                   </tr>
                 ))}
-                 {/* aqui embaixo esta sem o map, escrevi a mao */}
-                {/* <tr
-                  className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
-                >
-                    <th scope="row" className="px-6 py-4 font-light text-gray-900 whitespace-nowrap dark:text-white">
-                      Xiaomi Redmi 9
-                    </th>
-                    <td className="px-6 py-4">
-                      Xiaomi
-                    </td>
-                    <td className="px-6 py-4">
-                      Redmi 9
-                    </td>
-                    <td className="px-6 py-4">
-                      $10000
-                    </td>
-                    <td className="px-6 py-4">
-                      Red
-                    </td>
-                    <td className="px-6 py-4">
-                    <button type="button" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">UPDATE</button>
-                      {' '}
-                      <button type="button" className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">DELETE</button>
-                    </td>
-                </tr> */}
-
             </tbody>
         </table>
     </div>

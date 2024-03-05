@@ -1,5 +1,4 @@
 import { useState } from "react";
-import Table from "./Table";
 
 function ProductFilter() {
   const [dropdownVisible, setDropdownVisible] = useState(false);
@@ -9,7 +8,7 @@ function ProductFilter() {
   const handleInputChange = (event) => {
     setQuery(event.target.value);
   };
-
+  console.log(results);
   // função para buscar produtos
   const handleSearch = async () => {
     try {
@@ -85,26 +84,6 @@ function ProductFilter() {
           </div>
         </div>
         {/* RESULTADOS DA PESQUISA */}
-        <div>
-          <table>
-            <thead>
-              <tr>
-                <Table />
-              </tr>
-            </thead>
-            <tbody>
-              {results.map((product, index) => {
-                <tr key={index}>
-                  <td>{ product.name }</td>
-                  <td>{ product.brand }</td>
-                  <td>{ product.model }</td>
-                  <td>{ product.price }</td>
-                  <td>{ product.color }</td>
-                </tr>
-              })}
-            </tbody>
-          </table>
-        </div>
       </form>
   )
 }

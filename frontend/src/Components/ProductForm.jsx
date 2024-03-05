@@ -1,9 +1,18 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
 
 function ProductsForm() {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const verifyLocalStorage = () => {
+      if (!localStorage.getItem('token')) {
+        navigate('/auth/login');
+      }
+    };
+    verifyLocalStorage();
+  }, [navigate]);
 
   const [products, setProducts] = useState([]);
   const [formData, setFormData] = useState({
