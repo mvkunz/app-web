@@ -1,7 +1,10 @@
 import { useState } from 'react';
-import { NavLink } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 function ProductsForm() {
+  const navigate = useNavigate();
+
   const [products, setProducts] = useState([]);
   const [formData, setFormData] = useState({
     name: '',
@@ -10,35 +13,55 @@ function ProductsForm() {
     price: '',
     color: ''
   });
+
   // atualiza o estado do formData com os valores do formulário
-  const handleChange = (e) => {
-    const { name, value } = e.target;
+  const handleChange = (event) => {
+    const { name, value } = event.target;
     setFormData({
       ...formData,
       [name]: value
     });
   };
   // preenche o form
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Cria um novo objeto com os dados do formulário
-    const newProduct = {
-      name: formData.name,
-      brand: formData.brand,
-      model: formData.model,
-      price: formData.price,
-      color: formData.color
-    };
-    // Adiciona o novo produto ao array de produtos
-    setProducts([...products, newProduct]);
-    // Limpa o formulário
-    setFormData({
-      name: '',
-      brand: '',
-      model: '',
-      price: '',
-      color: ''
-    });
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      const response = await fetch('http://localhost:3000/api/products', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify(formData),
+      });
+      if (!response.ok) {
+        throw new Error('Erro ao registrar. Por favor, tente novamente.');
+      }
+      if (response.ok) {
+        // Cria um novo objeto com os dados do formulário
+        const newProduct = {
+          name: formData.name,
+          brand: formData.brand,
+          model: formData.model,
+          price: formData.price,
+          color: formData.color
+          // Adiciona o novo produto ao array de produtos
+        };
+        setProducts([...products, newProduct]);
+      }
+      // Limpa o formulário
+      setFormData({
+        name: '',
+        brand: '',
+        model: '',
+        price: '',
+        color: ''
+      });
+      alert('Produto registrado com sucesso!');
+      navigate('/products');
+    } catch (error) {
+      console.error('Erro ao registrar:', error);
+    }
   };
 
   return (
@@ -84,6 +107,7 @@ function ProductsForm() {
         <button
           type="submit"
           className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center mt-2 mb-4 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          onClick={handleSubmit}
         >
           REGISTER
         </button>
@@ -93,20 +117,6 @@ function ProductsForm() {
         >
           <NavLink to="/products">BACK TO ALL PRODUCTS </NavLink>
         </button>
-      </div>
-
-      {/* Lista de produto add pelo usuário */}
-      <div>
-        {products.map((product, index) => (
-          <div key={index}>
-            <p>Name: {product.name}</p>
-            <p>Brand: {product.brand}</p>
-            <p>Model: {product.model}</p>
-            <p>Price: {product.price}</p>
-            <p>Color: {product.color}</p>
-            <hr />
-          </div>
-        ))}
       </div>
     </div>
   );
