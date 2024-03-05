@@ -6,10 +6,6 @@ function ProductFilter() {
   const [query, setQuery] = useState('');
   const [results, setResults] = useState([]);
 
-  const toggleDropdown = () => {
-    setDropdownVisible(!dropdownVisible);
-  }
-
   const handleInputChange = (event) => {
     setQuery(event.target.value);
   };
@@ -18,7 +14,7 @@ function ProductFilter() {
   const handleSearch = async () => {
     try {
       // faz uma solicitação a API
-      const response = await fetch(`https://sua-api.com/search?q=${query}`);
+      const response = await fetch(`http://localhost:3000/api/products/${query}`);
       if (!response.ok) {
         throw new Error('Falha ao buscar dados');
       }
@@ -37,7 +33,7 @@ function ProductFilter() {
         <button
           id="dropdown-button"
           data-dropdown-toggle="dropdown"
-          onClick={ toggleDropdown }
+          onClick={ () => setDropdownVisible(!dropdownVisible) }
           className="flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-e-0 border-gray-300 dark:border-gray-700 dark:text-white rounded-s-lg hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-300 dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
           type="button">
             All Categories
@@ -45,25 +41,27 @@ function ProductFilter() {
           <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4"/>
           </svg>
         </button>
-        <div id="dropdown" className="z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
-          <ul className="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdown-button">
-            <li>
-              <a href="#" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Name</a>
-            </li>
-            <li>
-              <a href="#" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Brand</a>
-            </li>
-            <li>
-              <a href="#" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Model</a>
-            </li>
-            <li>
-              <a href="#" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Price</a>
-            </li>
-            <li>
-              <a href="#" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Color</a>
-            </li>
-            </ul>
-          </div>
+        {dropdownVisible && (
+          <div id="dropdown" className="z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
+            <ul className="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdown-button">
+              <li>
+                <a href="#" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Name</a>
+              </li>
+              <li>
+                <a href="#" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Brand</a>
+              </li>
+              <li>
+                <a href="#" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Model</a>
+              </li>
+              <li>
+                <a href="#" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Price</a>
+              </li>
+              <li>
+                <a href="#" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Color</a>
+              </li>
+              </ul>
+            </div>
+        )}
           {/* CAMPO PESQUISAR */}
           <div className="relative w-full">
             <input
