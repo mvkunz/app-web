@@ -9,7 +9,7 @@ const Table = () => {
     // Função para carregar os produtos da API
     const fetchProducts = async () => {
       try {
-        const response = await fetch('http://localhost:3000/api/products', {
+        const response = await fetch('https://backend-products-b0316b247c2e.herokuapp.com/api/products', {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`
           }
@@ -33,7 +33,7 @@ const Table = () => {
 
   const handleDetele = async (id) => {
     try {
-      const response = await fetch(`http://localhost:3000/api/products/${id}`, {
+      const response = await fetch(`https://backend-products-b0316b247c2e.herokuapp.com/api/products/${id}`, {
         method: 'DELETE',
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`

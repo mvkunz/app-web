@@ -22,7 +22,7 @@ function Login() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (isValidEmail && isValidPassword) {
-      const response = await fetch('http://localhost:3000/api/auth/login', {
+      const response = await fetch('https://backend-products-b0316b247c2e.herokuapp.com/api/auth/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

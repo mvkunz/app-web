@@ -12,7 +12,7 @@ function StructureThreeForm() {
       if (!id) return;
 
       try {
-        const response = await fetch(`http://localhost:3000/api/products/${id}`, {
+        const response = await fetch(`https://backend-products-b0316b247c2e.herokuapp.com/api/products/${id}`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`,
           },
@@ -79,7 +79,7 @@ function StructureThreeForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const endpoint = id ? `http://localhost:3000/api/products/${id}` : 'http://localhost:3000/api/products';
+    const endpoint = id ? `https://backend-products-b0316b247c2e.herokuapp.com/api/products/${id}` : 'https://backend-products-b0316b247c2e.herokuapp.com/api/products';
     const method = id ? 'PUT' : 'POST';
 
     try {

@@ -82,7 +82,7 @@ function ProductsForm() {
       } else if (showForm2) {
         sendProduct = structureTwo;
       }
-      const response = await fetch('http://localhost:3000/api/products', {
+      const response = await fetch('https://backend-products-b0316b247c2e.herokuapp.com/api/products', {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`
@@ -145,7 +145,7 @@ function ProductsForm() {
   const handleSubmitStructureTwo = async (event) => {
     event.preventDefault();
     try {
-      const response = await fetch('http://localhost:3000/api/products', {
+      const response = await fetch('https://backend-products-b0316b247c2e.herokuapp.com/api/products', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

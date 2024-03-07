@@ -41,7 +41,7 @@ function ProductForm2() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await fetch('http://localhost:3000/api/products', {
+      const response = await fetch('https://backend-products-b0316b247c2e.herokuapp.com/api/products', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -19,7 +19,7 @@ const RegisterForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:3000/api/auth/register', {
+      const response = await fetch('https://backend-products-b0316b247c2e.herokuapp.com/api/auth/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

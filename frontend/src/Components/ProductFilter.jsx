@@ -10,7 +10,7 @@ function ProductFilter() {
   const handleSearch = async () => {
     try {
       // faz uma solicitação a API
-      const response = await fetch(`http://localhost:3000/api/products/${input}`);
+      const response = await fetch(`https://backend-products-b0316b247c2e.herokuapp.com/api/products/${input}`);
       if (!response.ok) {
         throw new Error('Falha ao buscar dados');
       }
@@ -25,7 +25,7 @@ function ProductFilter() {
 //   useEffect(() => {
 //     const handleSearch = async () => {
 //       try {
-//         const response = await fetch(`http://localhost:3000/api/products/${input}`, {
+//         const response = await fetch(`https://backend-products-b0316b247c2e.herokuapp.com/api/products/${input}`, {
 //           headers: {
 //             Authorization: `Bearer ${localStorage.getItem('token')}`
 //           }
