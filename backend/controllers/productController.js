@@ -1,8 +1,10 @@
 const { Product, ProductDetails } = require("../models");
 const sequelize = require("../config/database");
+import { Op } from 'sequelize';
 
 exports.getProducts = async (req, res) => {
   try {
+    const { name, brand, model, price, color } = req.query;
     const products = await Product.findAll({
       include: [
         {
@@ -10,6 +12,13 @@ exports.getProducts = async (req, res) => {
           as: "details",
         },
       ],
+      where: {
+        ...(name && { name: { [Op.like]: `%${name}%` } }),
+        ...(brand && { brand: { [Op.like]: `%${brand}%` } }),
+        ...(model && { model: { [Op.like]: `%${model}%` } }),
+        ...(price && { "$details.price$": { [Op.like]: `%${price}%` } }),
+        ...(color && { "$details.color$": { [Op.like]: `%${color}%` } }),
+      },
     });
     res.json(products);
   } catch (error) {
