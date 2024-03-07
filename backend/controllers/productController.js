@@ -1,6 +1,6 @@
 const { Product, ProductDetails } = require("../models");
 const sequelize = require("../config/database");
-const {op} = require('sequelize');
+const { Op } = require('sequelize');
 exports.getProducts = async (req, res) => {
   try {
     const { name, brand, model, price, color } = req.query;
