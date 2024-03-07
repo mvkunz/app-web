@@ -1,4 +1,5 @@
 const { Sequelize } = require("sequelize");
+require('pg')
 
 const sequelize = new Sequelize("verceldb", "default", "SszYxr0N6ZcW", {
   host: "ep-dry-forest-a46o2c93-pooler.us-east-1.aws.neon.tech",
