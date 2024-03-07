@@ -1,7 +1,51 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+
 
 function StructureThreeForm() {
+  const { id } = useParams();
+  const navigate = useNavigate();
   const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      if (!id) return;
+
+      try {
+        const response = await fetch(`http://localhost:3000/api/products/${id}`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error('Product fetch failed');
+        }
+
+        const product = await response.json();
+        let parsedDetailsToData = {
+          name: product.name,
+          brand: product.brand,
+          model: product.model,
+          data: product.details.map((detail) => {
+            return {
+              price: detail.price,
+              color: detail.color,
+              id: detail.id,
+              productId: detail.productId,
+            };
+          }),
+        };
+        
+        setProducts([parsedDetailsToData]); // Assumindo que a API retorna o produto em um formato que se encaixe diretamente no estado
+      } catch (error) {
+        console.error('Error fetching product:', error);
+      }
+    };
+
+    fetchProduct();
+  }, [id]);
+
 
   const handleAddProduct = () => {
     const newProduct = {
@@ -34,34 +78,34 @@ function StructureThreeForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
-    // Assuming `products` is the state holding all the product data to be submitted
-    // If your data structure is different, adjust accordingly
-    const sendProduct = products ; // Wrapping products in an object if the API expects an object
-  
+
+    const endpoint = id ? `http://localhost:3000/api/products/${id}` : 'http://localhost:3000/api/products';
+    const method = id ? 'PUT' : 'POST';
+
     try {
-      const response = await fetch('http://localhost:3000/api/products', {
-        method: 'POST',
+      const response = await fetch(endpoint, {
+        method: method,
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem('token')}`, // Ensure localStorage.getItem('token') retrieves the correct token
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
-        body: JSON.stringify(sendProduct),
+        body: JSON.stringify(id ? products[0] : products),
       });
-  
+
       if (!response.ok) {
-        throw new Error('Error registering products. Please try again.');
+        throw new Error('Error submitting product');
       }
+
+      alert(`Product ${id ? 'updated' : 'registered'} successfully!`);
       setProducts([]);
-  
-      alert('Products registered successfully!');
-      // navigate('/products');
+      navigate('/products');
     } catch (error) {
-      console.error('Error submitting products:', error);
+      console.error('Error submitting product:', error);
       alert(error.message);
     }
   };
-  
+
+
 
   return (
     <div className="container mx-auto p-4">

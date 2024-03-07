@@ -1,4 +1,5 @@
 const { Product, ProductDetails } = require("../models");
+const sequelize = require("../config/database");
 
 exports.getProducts = async (req, res) => {
   try {
@@ -124,20 +125,59 @@ exports.createProduct = async (req, res) => {
 };
 
 exports.updateProduct = async (req, res) => {
+  const transaction = await sequelize.transaction();
   try {
-    const { id } = req.params;
-    const [updated] = await Product.update(req.body, { where: { id: id } });
+    const { id } = req.params; // ID do produto principal
+    const { name, brand, model, data } = req.body;
 
-    if (updated) {
-      const updatedProduct = await Product.findOne({ where: { id: id } });
-      res.status(200).json(updatedProduct);
-    } else {
-      res.status(404).send("Produto não encontrado.");
+    // Atualiza o produto principal
+    const [updated] = await Product.update(
+      { name, brand, model },
+      { where: { id: id } },
+      { transaction }
+    );
+
+    if (updated === 0) {
+      throw new Error("Produto não encontrado.");
     }
+
+    // Atualiza os detalhes existentes e adiciona novos detalhes
+    if (data && Array.isArray(data)) {
+      for (const detail of data) {
+        const { id: detailId, color, price } = detail;
+
+        if (detailId) {
+          // Atualizar detalhes existentes
+          await ProductDetails.update(
+            { color, price },
+            { where: { id: detailId, productId: id } },
+            { transaction }
+          );
+        } else {
+          // Adicionar novos detalhes
+          await ProductDetails.create(
+            { productId: id, color, price },
+            { transaction }
+          );
+        }
+      }
+    }
+
+    await transaction.commit();
+
+    const updatedProduct = await Product.findByPk(id, {
+      include: [{ model: ProductDetails, as: 'details' }],
+    });
+
+    res.json(updatedProduct);
   } catch (error) {
+    await transaction.rollback();
+    console.error(error);
     res.status(500).send(error.message);
   }
 };
+
+
 
 exports.deleteProduct = async (req, res) => {
   try {
@@ -153,3 +193,28 @@ exports.deleteProduct = async (req, res) => {
     res.status(500).send(error.message);
   }
 };
+
+exports.getProductById = async (req, res) => {
+  try {
+    const { id } = req.params; // Obtém o ID do produto da URL
+
+    const product = await Product.findByPk(id, {
+      include: [
+        {
+          model: ProductDetails,
+          as: "details", // Certifique-se de que 'details' é como você definiu a associação no seu modelo Product
+        },
+      ],
+    });
+
+    if (!product) {
+      return res.status(404).send("Produto não encontrado.");
+    }
+
+    res.json(product);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+};
+

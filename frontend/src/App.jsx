@@ -22,6 +22,8 @@ function App() {
         <Route path="/product/create/structurethree" element={ <StructureThreeForm /> } />
         <Route path="/product/create/structureone" element={ <ProductStructureOneForm /> } />
         <Route path="/product/create/structuretwo" element={ <ProductStructureTwoForm /> } />
+        <Route path="/product/update/:id" element={ <StructureThreeForm /> } />
+
       </Routes>
     </>
   )

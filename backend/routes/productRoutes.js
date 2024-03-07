@@ -4,6 +4,7 @@ const {
   createProduct,
   updateProduct,
   deleteProduct,
+  getProductById
 } = require("../controllers/productController");
 const verifyToken = require("../middlewares/authMiddleware");
 
@@ -11,8 +12,9 @@ const router = express.Router();
 
 router.get("/", verifyToken, getProducts);
 router.post("/", verifyToken, createProduct);
-router.put("/:id", verifyToken, updateProduct);
+router.put("/:id", updateProduct);
 router.delete("/:id", verifyToken, deleteProduct);
+router.get("/:id", getProductById);
 
 module.exports = router;
 
@@ -137,3 +139,28 @@ module.exports = router;
  *       500:
  *         description: Internal Server Error
  */
+
+/**
+ * @swagger
+ * /products/{id}:
+ *   get:
+ *     summary: Returns a single product by its id
+ *     tags: [Products]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: Unique identifier of the product
+ *     responses:
+ *       200:
+ *         description: A single product
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Product'
+ *       404:
+ *         description: The product was not found
+ */
+

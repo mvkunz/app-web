@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Table = () => {
+  const navigate = useNavigate();
   const [products, setProducts] = useState([])
 
   useEffect(() => {
@@ -26,7 +28,7 @@ const Table = () => {
   }, []);
 
   const handleEdit = (id) => {
-    console.log('Editando produto:', id);
+    navigate(`/product/update/${id}`)
   }
 
   const handleDetele = async (id) => {
