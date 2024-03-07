@@ -44,7 +44,6 @@ function ProductsForm() {
   const handleShowForm2 = () => {
     setShowForm2(true);
     setShowForm1(false);
-
   }
 
   // atualiza o estado do formData com os valores do formulário
