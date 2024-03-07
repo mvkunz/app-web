@@ -106,11 +106,10 @@ function StructureThreeForm() {
   };
 
 
-
   return (
     <div className="container mx-auto p-4">
       <form onSubmit={handleSubmit} className="space-y-4">
-        <h2 className="text-xl font-bold mb-4">Add Products (Structure 3)</h2>
+        <h2 className="text-xl text-white font-bold mb-4">Add Products (Structure 3)</h2>
         <button type="button" onClick={handleAddProduct} className="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none">Add Product</button>
         {products.map((product, index) => (
           <div key={index} className="border p-4 rounded space-y-2">
@@ -119,37 +118,37 @@ function StructureThreeForm() {
               placeholder="Product Name"
               value={product.name}
               onChange={(e) => handleChange(index, null, 'name', e.target.value)}
-              className="input input-bordered w-full max-w-xs p-2 rounded border-gray-300 shadow-sm"
+              className="input input-bordered w-full max-w-xs p-2 rounded border-gray-300 shadow-sm mr-5"
             />
             <input
               type="text"
               placeholder="Brand"
               value={product.brand}
               onChange={(e) => handleChange(index, null, 'brand', e.target.value)}
-              className="input input-bordered w-full max-w-xs p-2 rounded border-gray-300 shadow-sm"
+              className="input input-bordered w-full max-w-xs p-2 rounded border-gray-300 shadow-sm mr-5"
             />
             <input
               type="text"
               placeholder="Model"
               value={product.model}
               onChange={(e) => handleChange(index, null, 'model', e.target.value)}
-              className="input input-bordered w-full max-w-xs p-2 rounded border-gray-300 shadow-sm"
+              className="input input-bordered w-full max-w-xs p-2 rounded border-gray-300 shadow-sm mr-5"
             />
             {product.data.map((data, dataIndex) => (
-              <div key={dataIndex} className="flex space-x-2">
+              <div key={dataIndex} className="flex py-2 px-4 space-x-2 ml-40">
                 <input
                   type="number"
                   placeholder="Price"
                   value={data.price}
                   onChange={(e) => handleChange(index, dataIndex, 'price', e.target.value)}
-                  className="input input-bordered w-full max-w-xs p-2 rounded border-gray-300 shadow-sm"
+                  className="input input-bordered w-full max-w-xs p-2 rounded border-gray-300 shadow-sm mr-5 mt-3"
                 />
                 <input
                   type="text"
                   placeholder="Color"
                   value={data.color}
                   onChange={(e) => handleChange(index, dataIndex, 'color', e.target.value)}
-                  className="input input-bordered w-full max-w-xs p-2 rounded border-gray-300 shadow-sm"
+                  className="input input-bordered w-full max-w-xs p-2 rounded border-gray-300 shadow-sm ml-10 mt-3"
                 />
               </div>
             ))}

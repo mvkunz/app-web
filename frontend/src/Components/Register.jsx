@@ -47,16 +47,16 @@ const RegisterForm = () => {
 
   return (
     <div>
-      <h2 className="text-3xl font-bold dark:text-white">Register</h2>
+      <h2 className="text-3xl font-bold text-white dark:text-black">Register</h2>
       <form onSubmit={handleSubmit}>
         <div className="flex justify-center items-center h-40 mb-2">
           <label
             htmlFor="email"
-            className="block mb-2 text-xl font-medium text-gray-900 dark:text-white"
+            className="block mb-2 text-xl font-medium text-gray-900 text-white dark:text-black"
           >Email:
             <input
               type="email"
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-60 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-60 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mt-1"
               placeholder="name@company.com"
               required=""
               value={email}
@@ -67,13 +67,13 @@ const RegisterForm = () => {
         <div className="flex justify-center items-center h-3 pt-0">
           <label
             htmlFor='password'
-            className="block mb-2 text-xl font-medium text-gray-900 dark:text-white"
+            className="block mb-2 text-xl font-medium text-white dark:text-black"
           >Password:
             <input
               type="password"
               value={password}
               onChange={handlePasswordChange}
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-60 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-60 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mt-1"
               placeholder="•••••••••"
               required=""
             />
